@@ -9,8 +9,8 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
-  <script type="module" crossorigin src="/assets/index--Iueogi_.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-Cf8PwTRR.css">
+  <script type="module" crossorigin src="/assets/index-B9dM70UG.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Mad1n1s1.css">
 </head>
 <body>
 <main>
@@ -228,11 +228,94 @@
 	</div>
 
 	<div class="g cards">
-		<a class="card dark" style="--c: 1 / 5; --cm: 1 / -1" href="https://github.com/pmndre/pine/releases/latest">
-			<p class="card-h"><span>App</span><i>05.1</i></p>
-			<p class="card-big">Pine<span>macOS · Windows · Linux ↓</span><span>Carries pine and its Node. Nothing else to install</span></p>
-		</a>
-		<div class="card grey" style="--c: 5 / 10; --cm: 1 / 5; --cs: 1 / -1">
+		<div class="card dark dl" style="--c: 1 / -1" data-dl>
+			<div class="card-h dl-h">
+				<span>App · <b data-dl-seen>for your computer</b></span>
+				<span class="os-tabs" role="tablist" aria-label="System">
+					<button type="button" role="tab" data-os="mac" aria-selected="true">macOS</button>
+					<button type="button" role="tab" data-os="win" aria-selected="false">Windows</button>
+					<button type="button" role="tab" data-os="linux" aria-selected="false">Linux</button>
+					<button type="button" role="tab" data-os="phone" aria-selected="false">Phone</button>
+				</span>
+				<i>05.1</i>
+			</div>
+
+			<div class="dl-os" data-os="mac">
+				<div class="dl-main">
+					<p class="card-big">Pine for macOS<span data-dl-info="mac">Apple silicon · <em data-dl-version>latest</em> · macOS 13.5+</span></p>
+					<a class="dl-btn" data-dl-file="mac-arm64" href="https://github.com/pmndre/pine/releases/latest">Download .dmg<b>↓</b></a>
+					<p class="dl-alt">Intel Mac? <a data-dl-alt data-dl-file="mac-x64" href="https://github.com/pmndre/pine/releases/latest">Download for Intel</a> · <a href="https://github.com/pmndre/pine/releases/latest">All files ↗</a></p>
+					<p class="dl-alt dl-web">Pine on another machine? <a href="https://pine-main.drcmda.workers.dev">Open it in this browser ↗</a></p>
+				</div>
+				<div class="dl-pm">
+					<p class="dl-pm-h"><span>Or with Homebrew</span></p>
+					<div class="cmd">
+						<code><span>$</span> brew tap pmndre/pine https://github.com/pmndre/pine</code>
+						<code><span>$</span> brew install --cask pmndre/pine/pmndre-pine</code>
+						<button type="button" class="copy-btn" data-copy="brew tap pmndre/pine https://github.com/pmndre/pine && brew install --cask pmndre/pine/pmndre-pine">Copy</button>
+					</div>
+					<p class="dl-note">Signed and notarised. Carries pine and its Node, and updates itself.</p>
+				</div>
+			</div>
+
+			<div class="dl-os" data-os="win" hidden>
+				<div class="dl-main">
+					<p class="card-big">Pine for Windows<span data-dl-info="win">x64 · <em data-dl-version>latest</em> · Windows 10 and 11</span></p>
+					<a class="dl-btn" data-dl-file="win-x64" href="https://github.com/pmndre/pine/releases/latest">Download installer<b>↓</b></a>
+					<p class="dl-alt">ARM PC? <a data-dl-alt data-dl-file="win-arm64" href="https://github.com/pmndre/pine/releases/latest">Download for ARM</a> · <a href="https://github.com/pmndre/pine/releases/latest">All files ↗</a></p>
+					<p class="dl-alt dl-web">Pine on another machine? <a href="https://pine-main.drcmda.workers.dev">Open it in this browser ↗</a></p>
+				</div>
+				<div class="dl-pm">
+					<p class="dl-pm-h"><span>Or with winget</span><em>Soon</em></p>
+					<div class="cmd">
+						<code><span>&gt;</span> winget install pmndre.Pine</code>
+						<button type="button" class="copy-btn" data-copy="winget install pmndre.Pine">Copy</button>
+					</div>
+					<p class="dl-pm-h"><span>Or with Scoop</span><em>Soon</em></p>
+					<div class="cmd">
+						<code><span>&gt;</span> scoop bucket add extras</code>
+						<code><span>&gt;</span> scoop install extras/pine</code>
+						<button type="button" class="copy-btn" data-copy="scoop bucket add extras ; scoop install extras/pine">Copy</button>
+					</div>
+					<p class="dl-note">Installs for you alone, no administrator. Pine for an agent's sandbox runs in WSL.</p>
+				</div>
+			</div>
+
+			<div class="dl-os" data-os="linux" hidden>
+				<div class="dl-main">
+					<p class="card-big">Pine for Linux<span data-dl-info="linux">x86_64 · <em data-dl-version>latest</em> · any distribution</span></p>
+					<a class="dl-btn" data-dl-file="linux-appimage-x64" href="https://github.com/pmndre/pine/releases/latest">Download AppImage<b>↓</b></a>
+					<p class="dl-alt">Debian or Ubuntu? <a data-dl-deb data-dl-file="linux-deb-x64" href="https://github.com/pmndre/pine/releases/latest">Download .deb</a> · ARM? <a data-dl-alt data-dl-file="linux-appimage-arm64" href="https://github.com/pmndre/pine/releases/latest">AppImage for arm64</a> or <a data-dl-alt-deb data-dl-file="linux-deb-arm64" href="https://github.com/pmndre/pine/releases/latest">.deb for arm64</a> · <a href="https://github.com/pmndre/pine/releases/latest">All files ↗</a></p>
+					<p class="dl-alt dl-web">Pine on another machine? <a href="https://pine-main.drcmda.workers.dev">Open it in this browser ↗</a></p>
+				</div>
+				<div class="dl-pm">
+					<p class="dl-pm-h"><span>Or from the AUR</span><em>Soon</em></p>
+					<div class="cmd">
+						<code><span>$</span> yay -S pine-desktop-bin</code>
+						<button type="button" class="copy-btn" data-copy="yay -S pine-desktop-bin">Copy</button>
+					</div>
+					<p class="dl-note">The AppImage runs where it lies: <code>chmod +x</code> it first.</p>
+				</div>
+			</div>
+			<div class="dl-os" data-os="phone" data-phone="android" hidden>
+				<div class="dl-main">
+					<p class="card-big">Pine on your phone<span data-only="android">Android 8+ · <em data-dl-version>latest</em> · not on the Play Store</span><span data-only="ios">iPhone · in Safari 17+ · nothing to install</span></p>
+					<a class="dl-btn" data-only="android" data-dl-file="android" href="https://github.com/pmndre/pine/releases/latest">Download APK<b>↓</b></a>
+					<a class="dl-btn" data-only="ios" href="https://pine-main.drcmda.workers.dev">Open the web client<b>↗</b></a>
+					<p class="dl-alt" data-only="android">Or in the browser: <a href="https://pine-main.drcmda.workers.dev">the web client ↗</a> · <a href="https://github.com/pmndre/pine/blob/next/docs/references/mobile.md">How to install ↗</a></p>
+					<p class="dl-alt" data-only="ios">The iOS app is sideloaded for now: <a href="https://github.com/pmndre/pine/blob/next/docs/references/mobile.md">How ↗</a> · Android? <a data-dl-file="android" href="https://github.com/pmndre/pine/releases/latest">APK ↓</a></p>
+				</div>
+				<div class="dl-pm">
+					<p class="dl-pm-h"><span>First, Pine on a computer</span></p>
+					<p class="dl-lead">Your phone shows the pine of a computer: pair it with the Pine app by its QR code, or reach a server over SSH. Nothing runs on the phone.</p>
+					<div class="dl-share">
+						<button type="button" class="copy-btn" data-share>Send to my computer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card grey" style="--c: 1 / 10; --cm: 1 / -1">
 			<p class="card-h"><span>Command line · Node 24+</span><i>05.2</i></p>
 			<div class="cmd">
 				<code><span>$</span> npm install -g @pmndre/pine</code>
@@ -240,7 +323,7 @@
 				<button type="button" class="copy-btn" data-copy="npm install -g @pmndre/pine && pine init">Copy</button>
 			</div>
 		</div>
-		<a class="card outline" style="--c: 10 / 13; --cm: 5 / 7; --cs: 1 / -1" href="https://github.com/pmndre/pine">
+		<a class="card outline" style="--c: 10 / 13; --cm: 1 / -1" href="https://github.com/pmndre/pine">
 			<p class="card-h"><span>Source</span><i>05.3</i></p>
 			<p class="card-big">GitHub<span>pmndre/pine ↗</span></p>
 		</a>

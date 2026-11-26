@@ -268,3 +268,112 @@ for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")
 		setTimeout(() => (button.textContent = "Copy"), 1600);
 	});
 }
+
+// The install card: the app for the visitor's own computer first, the other systems one click away.
+// What the browser says is a guess (Safari never says Apple silicon from Intel), so every other file
+// is linked beside the button. The file names come from the latest release, asked of GitHub once;
+// without an answer the buttons go to the release's page.
+type Os = "mac" | "win" | "linux" | "phone";
+const card = document.querySelector<HTMLElement>("[data-dl]");
+if (card) {
+	const tabs = [...card.querySelectorAll<HTMLButtonElement>(".os-tabs [data-os]")];
+	const panes = [...card.querySelectorAll<HTMLElement>(".dl-os")];
+	const show = (os: Os) => {
+		for (const tab of tabs) tab.setAttribute("aria-selected", String(tab.dataset.os === os));
+		for (const pane of panes) pane.hidden = pane.dataset.os !== os;
+	};
+	for (const tab of tabs) tab.addEventListener("click", () => show(tab.dataset.os as Os));
+
+	// A phone gets the Phone tab, as Android or as iOS. iPadOS says it is a Mac, and only its touch tells it apart.
+	const asked = new URLSearchParams(location.search).get("os");
+	const ua = navigator.userAgent;
+	const ios = asked === "ios" || /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+	const android = asked === "android" || /Android/.test(ua);
+	const forced = asked === "ios" || asked === "android" ? "phone" : (asked as Os | null);
+	const guessed: Os | null = ios || android ? "phone" : /Windows/.test(ua) ? "win" : /Mac OS X|Macintosh/.test(ua) ? "mac" : /Linux|X11/.test(ua) ? "linux" : null;
+	const os = forced ?? guessed ?? "mac";
+	const phone = card.querySelector<HTMLElement>('.dl-os[data-os="phone"]');
+	if (phone) phone.dataset.phone = ios ? "ios" : "android";
+	// Sending the page to a computer means something only on a phone.
+	if (guessed !== "phone") card.querySelector(".dl-share")?.setAttribute("hidden", "");
+	show(os);
+	const seen = card.querySelector<HTMLElement>("[data-dl-seen]");
+	const names = { mac: "macOS", win: "Windows", linux: "Linux", phone: ios ? "an iPhone" : "an Android phone" };
+	if (seen) seen.textContent = guessed ? `Looks like ${names[guessed]}` : "Pick your system";
+
+	// Chromium tells the architecture: the visitor's own kind of machine gets its file first, and the
+	// line under the button offers the other one. Safari and Firefox do not tell it.
+	const ud = (navigator as Navigator & { userAgentData?: { getHighEntropyValues(h: string[]): Promise<{ architecture?: string }> } }).userAgentData;
+	const other: Record<Exclude<Os, "phone">, { arm: [string, string, string, string]; x86: [string, string, string, string] }> = {
+		mac: { arm: ["mac-arm64", "mac-x64", "Apple silicon", "Intel Mac? Download for Intel"], x86: ["mac-x64", "mac-arm64", "Intel", "Apple silicon? Download for Apple silicon"] },
+		win: { arm: ["win-arm64", "win-x64", "ARM", "x64 PC? Download for x64"], x86: ["win-x64", "win-arm64", "x64", "ARM PC? Download for ARM"] },
+		linux: { arm: ["linux-appimage-arm64", "linux-appimage-x64", "arm64", "x86_64? AppImage for x86_64"], x86: ["linux-appimage-x64", "linux-appimage-arm64", "x86_64", "ARM? AppImage for arm64"] },
+	};
+	if (guessed && guessed !== "phone") ud?.getHighEntropyValues(["architecture"]).then(({ architecture }) => {
+		const kind = architecture === "arm" ? "arm" : architecture === "x86" ? "x86" : null;
+		if (!kind) return;
+		const [main, alt, name, line] = other[guessed][kind];
+		const pane = card.querySelector<HTMLElement>(`.dl-os[data-os="${guessed}"]`);
+		const button = pane?.querySelector<HTMLAnchorElement>(".dl-btn");
+		const altLink = pane?.querySelector<HTMLAnchorElement>("[data-dl-alt]");
+		const info = pane?.querySelector("[data-dl-info]");
+		if (!button || !altLink || !info?.firstChild) return;
+		button.dataset.dlFile = main;
+		altLink.dataset.dlFile = alt;
+		const [question, label] = line.split("? ");
+		altLink.textContent = label;
+		const before = altLink.previousSibling;
+		// Only the question just before the link changes: "Debian or Ubuntu? ... · ARM? " keeps its start.
+		if (before?.textContent) before.textContent = before.textContent.replace(/[^·?]*\?\s*$/, (m) => `${m.startsWith(" ") ? " " : ""}${question}? `);
+		info.firstChild.textContent = `${name} · `;
+		// On Linux the .deb follows the AppImage: the visitor's own kind first, the other beside the other AppImage.
+		const deb = pane?.querySelector<HTMLAnchorElement>("[data-dl-deb]");
+		const altDeb = pane?.querySelector<HTMLAnchorElement>("[data-dl-alt-deb]");
+		if (deb && altDeb) {
+			deb.dataset.dlFile = kind === "arm" ? "linux-deb-arm64" : "linux-deb-x64";
+			altDeb.dataset.dlFile = kind === "arm" ? "linux-deb-x64" : "linux-deb-arm64";
+			altDeb.textContent = kind === "arm" ? ".deb for x86_64" : ".deb for arm64";
+		}
+		link();
+	}).catch(() => {});
+
+	const patterns: Record<string, RegExp> = {
+		"mac-arm64": /-arm64\.dmg$/, "mac-x64": /-x64\.dmg$/,
+		"win-x64": /-x64-setup\.exe$/, "win-arm64": /-arm64-setup\.exe$/,
+		"linux-appimage-x64": /-x86_64\.AppImage$/, "linux-appimage-arm64": /-arm64\.AppImage$/,
+		"linux-deb-x64": /-amd64\.deb$/,
+		"linux-deb-arm64": /-arm64\.deb$/,
+		android: /\.apk$/,
+	};
+	let assets: Array<{ name: string; browser_download_url: string }> = [];
+	const link = () => {
+		for (const a of card.querySelectorAll<HTMLAnchorElement>("[data-dl-file]")) {
+			const hit = assets.find((x) => patterns[a.dataset.dlFile ?? ""]?.test(x.name));
+			if (hit) a.href = hit.browser_download_url;
+		}
+	};
+	fetch("https://api.github.com/repos/pmndre/pine/releases/latest")
+		.then((r) => (r.ok ? r.json() : Promise.reject()))
+		.then((release: { tag_name: string; assets: typeof assets }) => {
+			assets = release.assets;
+			for (const v of card.querySelectorAll("[data-dl-version]")) v.textContent = release.tag_name;
+			link();
+		})
+		.catch(() => {});
+}
+
+// Send this page on to a computer: the system's share sheet where there is one (phones), else the address copied.
+for (const button of document.querySelectorAll<HTMLButtonElement>("[data-share]")) {
+	const label = button.textContent;
+	button.addEventListener("click", async () => {
+		const url = `${location.origin}/#install`;
+		try {
+			if (navigator.share) await navigator.share({ title: "Pine", text: "Install Pine on this computer", url });
+			else {
+				await navigator.clipboard.writeText(url);
+				button.textContent = "Link copied";
+				setTimeout(() => (button.textContent = label), 1600);
+			}
+		} catch {}
+	});
+}
