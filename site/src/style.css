@@ -622,7 +622,7 @@ a.card:hover { transform: translateY(-4px); }
 	cursor: pointer;
 }
 .os-tabs button[aria-selected="true"] { background: var(--white); color: var(--ink); }
-.dl-os { display: grid; grid-template-columns: 5fr 7fr; gap: calc(var(--g) * 2); align-items: end; }
+.dl-os { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: calc(var(--g) * 2); align-items: end; }
 .dl-os[hidden] { display: none; }
 .dl-main { display: flex; flex-direction: column; gap: 20px; }
 .dl-main .card-big { font-size: clamp(32px, 3.4cqw, 52px); }
@@ -649,16 +649,22 @@ a.card:hover { transform: translateY(-4px); }
 .dl-pm-h { display: flex; justify-content: space-between; font: 500 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); }
 .dl-pm-h em { font-style: normal; padding: 3px 8px; border-radius: 10px; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.3); color: var(--white); }
 .dl-pm .cmd code { font-size: clamp(13px, 1.15cqw, 17px); }
+/* An install command is read whole, on as many lines as it takes, rather than cut at the card's edge. */
+.dl-pm .cmd code { white-space: pre-wrap; overflow-wrap: anywhere; text-overflow: clip; }
 .dl-note { font-size: 13px; line-height: 18px; color: var(--dim); }
 .dl-note code { font-family: var(--mono); color: var(--white); }
 @media (max-width: 1023px) {
-	.dl-os { grid-template-columns: 1fr; gap: calc(var(--u) * 3); }
+	/* (minmax(0, ...): a long word, such as an address, would otherwise make the column, and the card, wider than the screen.) */
+	.dl-os { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
 	.dl-h { flex-wrap: wrap; }
 	.dl-h i { display: none; }
 }
 @media (max-width: 639px) {
-	.os-tabs { margin-left: 0; }
+	/* The four tabs share the card's width, so that they fit a 320 px screen. */
+	.os-tabs { display: flex; width: 100%; margin-left: 0; }
+	.os-tabs button { flex: 1 1 auto; min-width: 0; padding: 0 6px; letter-spacing: 0.02em; }
 	.dl-btn { align-self: stretch; justify-content: space-between; }
+	.dl-pm { padding: 16px 16px 18px; }
 }
 .dl-pm .cmd { min-height: 32px; justify-content: center; }
 .dl-os[data-phone="android"] [data-only="ios"], .dl-os[data-phone="ios"] [data-only="android"] { display: none; }
