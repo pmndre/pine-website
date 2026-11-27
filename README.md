@@ -3,7 +3,7 @@
 The website of [pine](https://github.com/pmndre/pine), served at pine.pmnd.re by Cloudflare Pages.
 
 The sources are in `site/` and built with Vite into the top of the repository (`index.html`,
-`assets/`, `fonts/`, `app/reel.js`), which Pages serves as it is: the Pages project has no build
+`privacy/`, `assets/`, `fonts/`, `app/reel.js`), which Pages serves as it is: the Pages project has no build
 step of its own. So the built files are committed. Build before you commit:
 
 ```bash
@@ -15,6 +15,7 @@ npm run build    # the site, into the top of the repository
 | | |
 |---|---|
 | `site/index.html` | The page |
+| `site/privacy/index.html` | The privacy text of pine's browser extension, at `/privacy/`: the Chrome Web Store listing names it. Keep it true to `extension/PRIVACY.md` in pine |
 | `site/src/style.css` | The grid, the type, the panels, the scroll effects |
 | `site/src/main.ts` | Puts the app's windows in, draws the pointer, keeps the lists beside them in step |
 | `site/public/app/reel.js` | The player: what the app's page has instead of a daemon |

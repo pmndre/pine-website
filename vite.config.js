@@ -40,7 +40,8 @@ const app = () => ({
 
 export default defineConfig({
 	root: "site",
-	build: { outDir: "..", emptyOutDir: false },
+	// Two pages: the site, and the privacy text of the browser extension (privacy/), which its store listing names.
+	build: { outDir: "..", emptyOutDir: false, rollupOptions: { input: { index: path.join(import.meta.dirname, "site", "index.html"), privacy: path.join(import.meta.dirname, "site", "privacy", "index.html") } } },
 	// The view's frame is sandboxed, so its origin is "null": its module scripts load only with CORS
 	// (site/public/_headers does the same where Cloudflare serves the site).
 	server: { cors: true },

@@ -671,3 +671,20 @@ a.card:hover { transform: translateY(-4px); }
 .dl-lead { font-size: clamp(15px, 1.3cqw, 19px); line-height: 1.35; letter-spacing: -0.01em; text-wrap: pretty; }
 .dl-share .copy-btn { position: static; height: auto; min-height: 32px; padding: 8px 14px; line-height: 16px; white-space: normal; text-align: left; }
 .dl-web { margin-top: -10px; padding-top: 14px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1); }
+
+/* ---------------------------------------------------------------- a page of text (privacy/)
+   The same panel and the same columns: a heading in the first four, its text in the six beside it. */
+
+.legal-head { padding-block: calc(var(--u) * 8) calc(var(--u) * 6); row-gap: calc(var(--u) * 4); }
+.legal-lead { font-size: 18px; line-height: 24px; text-wrap: pretty; }
+.legal-row { padding-block: calc(var(--u) * 4); row-gap: calc(var(--u) * 2); }
+.legal-row > h2 { font: 500 11px/24px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.legal-text { font-size: 16px; line-height: 24px; text-wrap: pretty; }
+.legal-text > * + * { margin-top: calc(var(--u) * 2); }
+.legal-text b { font-weight: 680; }
+.legal-text code { font: 500 13px/24px var(--mono); }
+.legal a:not(.meta a) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.legal-perms { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--u) var(--g); }
+.legal-perms dt { font: 500 13px/24px var(--mono); }
+.legal-perms dd { margin: 0; }
+@media (max-width: 639px) { .legal-perms { grid-template-columns: minmax(0, 1fr); row-gap: 0; } .legal-perms dd { margin-bottom: var(--u); } }

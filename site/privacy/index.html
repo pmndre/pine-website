@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy: the Pine browser extension</title>
+<meta name="description" content="What the Pine browser extension handles, where it sends it, and what it keeps: nothing leaves your computer through it.">
+<meta name="theme-color" content="#c4c4c1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<main>
+
+<section class="panel t-paper legal" aria-labelledby="privacy-h">
+	<div class="guides g" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+	<nav class="g meta bottom-rule">
+		<a style="--c: 1 / 4; --cm: 1 / 3; --cs: 1 / 3" href="/">← Pine</a>
+		<span style="--c: 4 / 10; --cm: 3 / 5" class="hide-s">Browser extension</span>
+		<span style="--c: 10 / 13; --cm: 5 / 7; --cs: 3 / 5" class="r">Privacy</span>
+	</nav>
+
+	<div class="g legal-head">
+		<h1 class="h1" id="privacy-h" style="--c: 1 / 10; --cm: 1 / -1">Privacy: the Pine browser extension</h1>
+		<p class="legal-lead" style="--c: 5 / 11; --cm: 1 / -1">The Pine extension lets the agents of <a href="https://github.com/pmndre/pine">pine</a>, a program you run on your own computer, work in your browser: in a tab group of their own, in the tabs they open there and the tabs you drag into it.</p>
+	</div>
+
+	<div class="g legal-row top-rule">
+		<h2 style="--c: 1 / 5; --cm: 1 / -1">What it sends, and where</h2>
+		<div class="legal-text" style="--c: 5 / 11; --cm: 1 / -1">
+			<p><b>Nothing to us.</b> The extension has no server. It has no analytics, no telemetry, no advertising and no remote code. We receive nothing from it.</p>
+			<p><b>To pine on your own computer, and nowhere else.</b> The extension talks to one program: pine's host, which your browser starts on your computer (native messaging). Nothing leaves your computer through the extension.</p>
+		</div>
+	</div>
+
+	<div class="g legal-row top-rule">
+		<h2 style="--c: 1 / 5; --cm: 1 / -1">What it handles</h2>
+		<div class="legal-text" style="--c: 5 / 11; --cm: 1 / -1">
+			<p>Only the tabs in pine's tab groups. For those tabs, the extension passes to pine what an agent asks for (the page's content, pictures of the page, what the page logs) and carries out what the agent does there (opening an address, clicks, typing). A tab outside pine's groups is never read or touched. Dragging a tab out of a group, or pressing Cancel on the browser's "started debugging this browser" bar, takes it back at once.</p>
+			<p>What pine does with a page an agent read is pine's own: it gives it to the AI model <b>you</b> set up in pine. If that is a model of a provider on the internet, the provider receives what the agent read, under that provider's terms. With a model on your own computer, it stays there.</p>
+			<p>In those tabs an agent is signed in wherever you are, because it is your browser. The extension does not read, copy or store your passwords or cookies.</p>
+		</div>
+	</div>
+
+	<div class="g legal-row top-rule">
+		<h2 style="--c: 1 / 5; --cm: 1 / -1">What it keeps</h2>
+		<div class="legal-text" style="--c: 5 / 11; --cm: 1 / -1">
+			<p>In the browser's own extension storage, on your computer: which tab group belongs to which conversation, which tabs an agent opened itself, and one version number. No page content and nothing about you. It is gone when you remove the extension.</p>
+		</div>
+	</div>
+
+	<div class="g legal-row top-rule">
+		<h2 style="--c: 1 / 5; --cm: 1 / -1">Permissions</h2>
+		<div class="legal-text" style="--c: 5 / 11; --cm: 1 / -1">
+			<dl class="legal-perms">
+				<dt>debugger</dt><dd>To read and operate the pages in pine's tab groups, as an agent's browser does, and to draw the agent's pointer there.</dd>
+				<dt>tabGroups</dt><dd>To make a tab group for a conversation and know which tabs are in it.</dd>
+				<dt>nativeMessaging</dt><dd>To talk to pine on your computer.</dd>
+				<dt>storage</dt><dd>To remember which group is whose while the browser runs.</dd>
+				<dt>alarms</dt><dd>To look for pine again when it was not running.</dd>
+			</dl>
+			<p>The extension asks for no access to sites and is not told the addresses of your tabs. What it does in a page goes through the debugger, which it attaches only to the tabs in pine's tab groups.</p>
+		</div>
+	</div>
+
+	<div class="g legal-row top-rule">
+		<h2 style="--c: 1 / 5; --cm: 1 / -1">Changes and contact</h2>
+		<div class="legal-text" style="--c: 5 / 11; --cm: 1 / -1">
+			<p>This text is kept with the extension's source, as <code>extension/PRIVACY.md</code> in <a href="https://github.com/pmndre/pine">pine's repository</a>, where its history shows every change. Questions and reports: <a href="https://github.com/pmndre/pine/issues">github.com/pmndre/pine/issues</a>.</p>
+		</div>
+	</div>
+
+	<footer class="g meta top-rule">
+		<span style="--c: 1 / 4; --cm: 1 / 3; --cs: 1 / 3">Pine</span>
+		<span style="--c: 4 / 7; --cm: 3 / 5" class="hide-s">pine.pmnd.re</span>
+		<span style="--c: 7 / 10" class="hide-m">Last changed 27 November 2026</span>
+		<span style="--c: 10 / 13; --cm: 5 / 7; --cs: 3 / 5" class="r">2026</span>
+	</footer>
+</section>
+
+</main>
+</body>
+</html>
